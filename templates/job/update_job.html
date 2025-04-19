@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center ">
+        <h6 class="mb-0">Update Job - {{job.title}}</h6>
+
+    </div>
+    <div class="card-body">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Title</label>
+                        {% render_field form.title class="form-control" %}
+                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                        </div> -->
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Overview</label>
+                        {% render_field form.overview class="form-control" %}
+                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                        </div> -->
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Country</label>
+                                <input type="email" class="form-control" value="Nigeria" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">State</label>
+                                {% render_field form.state class="form-control" %}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">City</label>
+                                {% render_field form.city class="form-control" %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Min Experience (years)</label>
+                                {% render_field form.min_experience_years class="form-control" %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Job Field</label>
+                                {% render_field form.job_field class="form-control" %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Paycheck (NGN)</label>
+                                {% render_field form.salary class="form-control" %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Responsibility</label>
+                                {% render_field form.responsibility class="form-control" id="responsibility" %}
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Qualification</label>
+                                {% render_field form.qualification class="form-control" id="qualification" %}
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Employee Benefits</label>
+                        {% render_field form.perks class="form-control" id="perks" %}
+                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                        </div> -->
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Disable Job</label>
+                        {% render_field form.is_disabled class="form-control" %}
+                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                        </div> -->
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $('#responsibility').trumbowyg();
+    $('#qualification').trumbowyg();
+    $('#perks').trumbowyg();
+</script>
+
+
+
+{% endblock content %}

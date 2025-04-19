@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center ">
+                <h6 class="mb-0">Company Information</h6>
+
+            </div>
+            <div class="card-body">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="">
+                            <small><b>Company Name:</b> {{company.name}}</small>
+                        </div>
+                        <div class="mt-1">
+                            <small><b>Description:</b> {{company.description}}</small>
+                        </div>
+                        <div class="mt-1">
+                            <small><b>Email ID:</b> {{company.email}}</small>
+                        </div>
+                        <div class="mt-1">
+                            <small><b>Website:</b> {{company.website}}</small>
+                        </div>
+                        <div class="mt-1">
+                            <small><b>Job count:</b> {{company.job_set.all.count}} posted</small>
+                        </div>
+                        <div class="mt-2">
+                            <a href="{% url 'company-details' company.pk %}" class="btn btn-primary btn-sm">View Company</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center ">
+                <h6 class="mb-0">Jobs Posted</h6>
+
+            </div>
+            <div class="card-body">
+                {% for job in jobs %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="">
+                            <h5 class="mb-1 ">{{job.title}}</h5>
+                            <p class="card-text">
+                                {{job.overview}}
+                            </p>
+                            <div class="text-muted small d-flex flex-wrap gap-3 align-items-center">
+                                <span><i class="bi bi-briefcase"></i> {{job.job_field}}</span>
+                                <span><i class="bi bi-geo-alt"></i> {{job.state}}, NG</span>
+                                <span><i class="bi bi-clock"></i> {{job.date_created|naturaltime}}</span>
+                                <span><i class="bi bi-coin"></i> {{job.salary|intcomma}} <small>NGN</small></span>
+                            </div>
+                            <a href="{% url 'job-details' job.pk %}" class="btn btn-primary btn-sm mt-3">View Details</a>
+                           
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+            </div>
+
+            <div class="card-footer bg-white">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        {% if jobs.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ jobs.previous_page_number }}">Previous</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                        </li>
+                        {% endif %}
+
+                        {% if jobs.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ jobs.next_page_number }}">Next</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+                        </li>
+                        {% endif %}
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

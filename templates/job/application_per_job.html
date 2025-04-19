@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center ">
+                <h6 class="mb-0">Filter Application</h6>
+
+            </div>
+            <div class="card-body">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-2">
+                                <label for="exampleInputEmail1" class="form-label">First Name</label>
+                                {% render_field filter.form.resume__first_name class="form-control" %}
+                                
+                            </div>
+                            <div class="mb-2">
+                                <label for="exampleInputEmail1" class="form-label">Surname</label>
+                                {% render_field filter.form.resume__surname class="form-control" %}
+                                
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center ">
+                <h6 class="mb-0">All Applicants for {{job.title|title}} Role</h6>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Surname</th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col">Email ID</th>
+                            <th scope="col">Applied On</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for application in applications %}
+                        <tr>
+                            <td>{{application.resume.first_name|title}}</td>
+                            <td>{{application.resume.surname|title}}</td>
+                            <td>{{application.resume.phone}}</td>
+                            <td>{{application.resume.email}}</td>
+                            <td>{{application.applied_on|date}}</td>
+
+                            <td>
+                                <a href="{{application.resume.resume_upload.url}}"
+                                    class="btn btn-primary btn-sm ">Download
+                                    Resume</a>
+                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+
+                                    <div class="btn-group" role="group">
+                                        <button id="btnGroupDrop1" type="button"
+                                            class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Actions
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <li><a class="dropdown-item"
+                                                    href="{% url 'resume-details' application.resume.pk %}">View
+                                                    Profile</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer bg-white">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        {% if applications.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ applications.previous_page_number }}">Previous</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                        </li>
+                        {% endif %}
+
+                        {% if applications.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ applications.next_page_number }}">Next</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+                        </li>
+                        {% endif %}
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    {% endblock content %}

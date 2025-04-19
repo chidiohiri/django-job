@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center ">
+        <h6 class="mb-0">{{resume.first_name|title}} {{resume.surname|title}} Information </h6>
+
+    </div>
+    <div class="card-body">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">First Name</label>
+                                <input type="email" class="form-control" value="{{resume.first_name}}" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" readonly>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Surname</label>
+                                <input type="email" class="form-control" value="{{resume.surname}}" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Email ID</label>
+                                <input type="email" class="form-control" value="{{resume.email}}" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" readonly>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Phone Number</label>
+                                <input type="email" class="form-control" value="{{resume.phone}}" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Upload Resume</label>
+                        <input type="email" class="form-control" value="{{resume.resume_upload}}" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" readonly>
+                       
+                    </div>
+                    
+                    
+                    {% if request.user.is_applicant %}
+                    <a href="{% url 'update-resume' resume.pk %}" type="submit" class="btn btn-primary">Update</a>
+                    {% else %}
+                    <a href="{{resume.resume_upload.url}}" type="submit" class="btn btn-primary">Download Resume</a>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}

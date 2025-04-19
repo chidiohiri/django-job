@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="h-100 p-5 bg-light border rounded-3">
+            <h2>{{job.title|title}}</h2>
+            <p class="col-8">
+                {{job.overview}}
+            </p>
+            <div class=" small d-flex flex-wrap gap-3 align-items-center">
+                <span><i class="bi bi-briefcase"></i> {{job.job_field}}</span>
+                <span><i class="bi bi-geo-alt"></i> {{job.state}}, NG</span>
+                <span><i class="bi bi-clock"></i> {{job.date_created|naturaltime}}</span>
+                <span><i class="bi bi-coin"></i> {{job.salary|intcomma}} <small>NGN</small></span>
+            </div>
+            {% if request.user.is_recruiter and request.user.has_company %}
+            <a href="{% url 'update-job' job.pk %}" class="btn btn-outline-secondary mt-3" type="button">Update Job</a>
+            {% elif request.user.is_applicant and request.user.has_resume %}
+            {% if has_applied %}
+            <a href="#" class="btn btn-outline-primary mt-3">Applied on {{has_applied.applied_on|date}}</a>
+            {% elif job.is_disabled == 'True' %}
+            <a href="#" class="btn btn-outline-danger mt-3">No longer accepting applications</a>
+            {% elif job.has_expired %}
+            <a href="#" class="btn btn-outline-danger mt-3">Job has Expired</a>
+            {% else %}
+            <a href="{% url 'apply-to-job' job.pk %}" class="btn btn-outline-secondary mt-3" type="button">Apply</a>
+            {% endif %}
+            {% else %}
+            <a href="{% url 'login' %}" class="btn btn-outline-secondary mt-3" type="button">Sign to Apply</a>
+            {% endif %}
+            {% if request.user.is_applicant %}
+            <a href="{% url 'save-job' job.pk %}" class="btn btn-outline-secondary mt-3 ms-1">Save Job</a>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center ">
+                    <h6 class="mb-0">Job Details</h6>
+                    
+                </div>
+                <div class="card-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <div>
+                                <h6>Overview</h6>
+                                <p>
+                                    {{job.overview|safe}}
+                                </p>
+                            </div>
+                            <div>
+                                <h6>Responsibilities</h6>
+                                <p>
+                                    {{job.responsibility|safe}}
+                                </p>
+                            </div>
+                            <div>
+                                <h6>Qualifications</h6>
+                                <p>
+                                    {{job.qualification|safe}}
+                                </p>
+                            </div>
+                            <div>
+                                <h6>Employee benefits</h6>
+                                <p>
+                                    {{job.perks|safe}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center ">
+                    <h6 class="mb-0">Company Information</h6>
+    
+                </div>
+                <div class="card-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="">
+                                <small><b>Company Name:</b> {{job.company.name|title}}</small>
+                            </div>
+                            <div class="mt-1">
+                                <small><b>Description:</b> {{job.company.description}}</small>
+                            </div>
+                            <div class="mt-1">
+                                <small><b>Email ID:</b> {{job.company.email}}</small>
+                            </div>
+                            <div class="mt-1">
+                                <small><b>Website:</b> {{job.company.website}}</small>
+                            </div>
+                            
+                            <div class="mt-2">
+                                <a href="{% url 'jobs-per-company' job.company.pk %}" class="btn btn-primary btn-sm">Jobs at {{job.company.name|title}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-header d-flex justify-content-between align-items-center ">
+                    <h6 class="mb-0">Job Alerts</h6>
+    
+                </div>
+                <div class="card-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <form>
+                                <div class="mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp">
+                                        <div id="emailHelp" class="form-text">
+                                            No spam. Authentic alerts only!
+                                        </div>
+                                </div>
+                               
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}
