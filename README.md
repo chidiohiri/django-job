@@ -28,7 +28,7 @@ Create and initialize a virtual environment (optional)
 Clone the Repository
 
     clone https://github.com/chidiohiri/django-job.git
-    cd django-inventory
+    cd django-job
 
 Move the project into the virtual environment, then install dependencies. The project dependencies can found in [requirements.txt](requirements.txt)
 
