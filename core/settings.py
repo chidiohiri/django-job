@@ -142,5 +142,5 @@ AUTH_USER_MODEL = 'accounts.User'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # for testing 
 
-PAYSTACK_SECRET_KEY = 'sk_test_66a0568ea9a25f37c9aa70970d9115ef057d854d'
-PAYSTACK_PUBLIC_KEY = 'pk_test_090c5a8ae7dbdfec8b90ff6f567267f2620472f4'
+PAYSTACK_SECRET_KEY = ''
+PAYSTACK_PUBLIC_KEY = ''

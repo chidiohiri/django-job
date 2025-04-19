@@ -39,6 +39,11 @@ Migrate all tables to the Sqlite3 DB
     python manage.py makemigrations
     python manage.py migrate
 
+Create/Login to Paystack account, and get secret and public key, then add it to the settings.py file (see file ending)
+
+    PAYSTACK_SECRET_KEY = ''
+    PAYSTACK_PUBLIC_KEY = ''
+
 Create a super user. This account will be used to access the admin dashboard and verify objects.
 
     python manage.py createsuperuser
